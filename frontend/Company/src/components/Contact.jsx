@@ -29,7 +29,7 @@ export default function Contact({ address, email, phone, whatsapp }) {
           <p className="text-xl text-gray-400">
             Hubungi kami untuk informasi lebih lanjut
           </p>
-        </div>
+        </div>  
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {contactItems.map((item, i) => (

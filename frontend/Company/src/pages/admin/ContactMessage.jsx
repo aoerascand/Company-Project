@@ -12,6 +12,17 @@ export default function AdminContactMessages() {
         .finally(() => setLoading(false));
     }, []);
 
+    const handleDelete = async (id) => {
+    if (!window.confirm("Yakin hapus pesan ini?")) return;
+    try{
+      await api.delete(`/contact-messages/${id}`);
+      setMessages((prev) => prev.filter((msg) => msg.id !== id));
+    }catch(error){
+      console.error("Gagal menghapus pesan", error);
+      alert("Gagal menghapus pesan");
+    }
+  };
+
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -28,11 +39,12 @@ export default function AdminContactMessages() {
             <table className="w-full text-sm">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="px-4 py-3 text-left">Name</th>
+                  <th className="px-4 py-3 text-left">Nama</th>
                   <th className="px-4 py-3 text-left">Email</th>
-                  <th className="px-4 py-3 text-left">Message</th>
-                  <th className="px-4 py-3 text-left">Date</th>
-                </tr>
+                  <th className="px-4 py-3 text-left">Pesan</th>
+                  <th className="px-4 py-3 text-left">Tanggal</th>
+                  <th className="px-4 py-3 text-left">Aksi</th>
+                  </tr>
               </thead>
 
               <tbody>
@@ -44,6 +56,8 @@ export default function AdminContactMessages() {
                     <td className="px-4 py-3 text-gray-500">
                       {new Date(msg.created_at).toLocaleDateString()}
                     </td>
+                    <button onClick={() => handleDelete(msg.id)}
+                      className="text-red-600 hover:underline">Hapus</button>
                   </tr>
                 ))}
               </tbody>
